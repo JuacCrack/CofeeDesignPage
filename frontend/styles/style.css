@@ -1,0 +1,136 @@
+::-webkit-scrollbar {
+    display: none;
+  }
+  
+  html {
+    scroll-behavior: smooth !important;
+  }
+  
+ /* General styles */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Segoe UI', sans-serif;
+	background-color: #F2F2F2;
+}
+
+/* Login wrapper */
+.login-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+}
+
+/* Login container */
+.login-container {
+	background-color: #FFF;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+	padding: 40px;
+}
+
+/* Login header */
+.login-header {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.login-header h2 {
+	color: #1ABC9C;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+/* Login body */
+.login-body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login-body input {
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 10px;
+	border-radius: 5px;
+	border: none;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-body button {
+	background-color: #1ABC9C;
+	color: #FFF;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	cursor: pointer;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease-in-out;
+}
+
+.login-body button:hover {
+	background-color: #16A085;
+}
+
+/* Overlay and popup */
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+
+.popup {
+	background-color: #FFF;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+	padding: 40px;
+	border-radius: 5px;
+	text-align: center;
+	animation: popupClose 0.5s forwards;
+}
+
+@keyframes popupOpen {
+	from {
+		opacity: 0;
+		transform: scale(0);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes popupClose {
+	from {
+		opacity: 1;
+		transform: scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: scale(0);
+	}
+}
+ 
+.popup p {
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+#close-btn {
+	background-color: #1ABC9C;
+	color: #FFF;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 20px;
+	cursor: pointer;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+}
