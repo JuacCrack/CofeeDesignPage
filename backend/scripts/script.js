@@ -13,7 +13,7 @@ loginBtn.addEventListener("click", function() {
 	if (emailInput.value === email && passwordInput.value === password) {
 		window.location.href = "home.php";
 	} else {
-		popupText.textContent = "Incorrect email or password";
+		popupText.textContent = "Email o Contraseñas incorrectos";
 		overlay.style.display = "flex";
 		popup.style.animation = "popupOpen 0.5s forwards";
 	}
