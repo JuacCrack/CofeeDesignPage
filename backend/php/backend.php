@@ -63,8 +63,8 @@ function compress_image($source_url, $quality) {
          // Mover la imagen comprimida a la carpeta de destino
          $filenamec = basename($_FILES["img"]["name"]);
          $filenamec = pathinfo($filenamec, PATHINFO_FILENAME);
-         $filenamec = $namec . "bg" . ".jpg"; // Agregar una marca de tiempo para evitar duplicados
-         $target_filec = $dir . $filenamec;
+         $filenamec = $id . "bg.jpg"; // Agregar una marca de tiempo para evitar duplicados
+         $target_filec = $dirc . $filenamec;
          file_put_contents($target_filec, $compressed_image); // guardar la imagen comprimida en la ubicación de destino
 
             $sql = "UPDATE categorias SET nombre='$namec', fecha=NOW() WHERE id='$id'";
@@ -134,7 +134,18 @@ function compress_image($source_url, $quality) {
           $sql = "DELETE FROM productos WHERE id = '$id' ";
 
         } elseif ($task == 'put') {
-          // ...
+
+          // Comprimir la imagen y obtener la imagen comprimida como una cadena de bytes
+          $compressed_image = compress_image($imagefilec, 10);
+          // Mover la imagen comprimida a la carpeta de destino
+          $filenamec = basename($_FILES["img"]["name"]);
+          $filenamec = pathinfo($filenamec, PATHINFO_FILENAME);
+          $filenamec = $id . "bg.jpg"; // Agregar una marca de tiempo para evitar duplicados
+          $target_filec = $dirp . $filenamec;
+          file_put_contents($target_filec, $compressed_image); // guardar la imagen comprimida en la ubicación de destino
+ 
+          $sql = "UPDATE productos SET nombre='$namep', descripcion='$descp', precio='$pricep', fecha=NOW() WHERE id='$id'";
+
         } elseif ($task == 'post') {
 
          // Comprimir la imagen y obtener la imagen comprimida como una cadena de bytes
@@ -172,7 +183,7 @@ function compress_image($source_url, $quality) {
           // ...
         } else {
           if ($conn->query($sql) === TRUE) {
-            header('Location: ../../home.php#200');
+            header("Location: ../../home.php#200");
           } else {
             throw new Exception($conn->error);
           }

@@ -1,5 +1,5 @@
-<?php       
- 
+<?php     
+     
  session_start();
 if (isset($_SESSION['error_message'])) {
     echo "<div class='popup-container' id='400'>
@@ -40,11 +40,7 @@ if (isset($_SESSION['error_message'])) {
 
         <nav class="btnes">
 
-            <a class="btnhead" href="home.php">Diseño</a>
-
-            <a class="btnhead" href="home.php"><h2 class="fix">Inicio</h2></a>
-
-            <a class="btnhead" href="home.php">Edicion</a>
+            <a class="btnhead" href="WebFlow/home.php"><h2 class="fix"></h2></a>
 
         </nav>
 
@@ -61,8 +57,54 @@ if (isset($_SESSION['error_message'])) {
         </div>
 
         <!-- CATEGORIAS -->
+
+        <script>
+    window.onload = function() {
+        detectarDivsc();
+        detectarDivsp();
+    }
+
+    function detectarDivsc() {
+        const categoriasBox = document.getElementById('categoriasbox');
+        if (categoriasBox) {
+            const divs = categoriasBox.getElementsByTagName('div');
+            if (divs.length === 0) {
+                const h3 = document.createElement('h3');
+                const textoH3 = document.createTextNode('No hay categorías');
+                h3.appendChild(textoH3);
+
+                const h4 = document.createElement('h4');
+                const textoH4 = document.createTextNode('Pulse en el botón crear para agregar una categoría');
+                h4.appendChild(textoH4);
+
+                categoriasBox.appendChild(h3);
+                categoriasBox.appendChild(h4);
+            }
+        }
+    }
+
+    function detectarDivsp() {
+        const productosBox = document.getElementById('productos');
+        if (productosBox) {
+            const divs = productosBox.getElementsByTagName('div');
+            if (divs.length === 0) {
+                const h3 = document.createElement('h3');
+                const textoH3 = document.createTextNode('No hay productos');
+                h3.appendChild(textoH3);
+
+                const h4 = document.createElement('h4');
+                const textoH4 = document.createTextNode('Pulse en el botón crear para agregar un producto a su correspondiente categoría');
+                h4.appendChild(textoH4);
+
+                productosBox.appendChild(h3);
+                productosBox.appendChild(h4);
+            }
+        }
+    }
+</script>
+
         
-        <div class="categorias" id="categorias">
+        <div class="categorias" id="categoriasbox">
 
             <?php 
                 $items = mysqli_query($conexion, $categorias);
@@ -73,18 +115,11 @@ if (isset($_SESSION['error_message'])) {
 
                     <div class="menu-item" style="background-image:url(backend/php/img_comprimida/categorias/<?php echo $row ["id"]; ?>bg.jpg);">
 
-                        <div class="blur">
+                        <a class="delete animate" href="#delete-<?php echo $row ["id"]; ?>">🗑️</a>
 
-                            <h2 class="h2"><?php echo $row ["nombre"]; ?></h2>
+                        <div class="blur"><?php echo $row ["nombre"]; ?></div>
 
-                            <div class="links">
-
-                                <a class="a" href="#delete-<?php echo $row ["id"]; ?>">🗑️</a>
-                                <a  class="a" href="#put-<?php echo $row ["id"]; ?>">📝</a>
-
-                            </div>
-
-                        </div>
+                        <a  class="put animate" href="#put-<?php echo $row ["id"]; ?>">📝</a>
 
                     </div>
 
@@ -92,12 +127,12 @@ if (isset($_SESSION['error_message'])) {
             
                         <div class="popup">
 
-                            <h4 class="delete">¿Desea eliminar la categoria <?php echo $row ["nombre"]; ?>? (Recuerde que se eliminaran todos los productos relacionados)</h4>
+                            <h4 class="">¿Desea eliminar la categoria <?php echo $row ["nombre"]; ?>? (Recuerde que se eliminaran todos los productos relacionados)</h4>
 
                             <div class="links">
 
-                            <a class="a confirm" href="backend/php/backend.php?type=categorias&id=<?php echo $row["id"]; ?>&task=delete">SI</a>
-                                <a  class="a deny" href="#">NO</a>
+                             <a class="a confirm" href="backend/php/backend.php?type=categorias&id=<?php echo $row["id"]; ?>&task=delete">SI</a>
+                             <a  class="a deny" href="#">NO</a>
 
                             </div>
 
@@ -111,7 +146,7 @@ if (isset($_SESSION['error_message'])) {
 
                             <a href="#" class="cerrar">X</a>
 
-                            <form action="backend/php/backend.php?type=categorias&id=<?php echo $row["id"]; ?>&task=put" method="post" enctype="multipart/form-data" id="form_put">
+                            <form action="backend/php/backend.php?type=categorias&id=<?php echo $row["id"]; ?>&task=put" method="post" enctype="multipart/form-data" id="form_categoria_put">
 
                                 <h3>Actualizar Categoria</h3>
 
@@ -151,7 +186,7 @@ if (isset($_SESSION['error_message'])) {
                     <h6>Añadir imagen</h6>
 
                     <label for="file_categorias_post" class="emoji-upload"></label>
-                    <input type="file" name="img" id="file_categorias_post">
+                    <input type="file" name="img" id="file_categorias_post" required>
 
                     <button class="btnsubmit" type="submit">Cargar</button>
 
@@ -165,59 +200,78 @@ if (isset($_SESSION['error_message'])) {
 
         <div class="title">
 
-         <h2>Productos</h2>
+         <h2 id="products">Productos</h2>
 
          <a class="crear" href="#postp">Crear</a>
 
         </div>
 
-        <div class="categorias" id="productos">
+       <div class="containerp">
 
-            <?php 
-             $items = mysqli_query($conexion, $categorias);
-             while ($row = mysqli_fetch_assoc ($items)) {
-             ?>
+       <div id="productos">
 
-                <div class="cate_min" style=""><a href="#cate-<?php echo $row ["id"]; ?>" id="afull"><?php echo $row ["nombre"]; ?></a></div>
+<?php 
+ $items = mysqli_query($conexion, $categorias);
+ while ($row = mysqli_fetch_assoc ($items)) {
+ ?>
 
-                <div class='popup-container' id="cate-<?php echo $row ["id"]; ?>">
-                    <div class='popup'>
-                        <a href='#' class='cerrar'>X</a>
+    <div class="cate_min" style=""><a href="#cate-<?php echo $row ["id"]; ?>" id="afull"><?php echo $row ["nombre"]; ?></a></div>
 
-                        <div class="productos">
+    <div class='popup-container' id="cate-<?php echo $row ["id"]; ?>">
+        <div class='popup'>
+            <a href='#' class='cerrar'>X</a>
 
-                            <?php
-                                $productos = "SELECT * FROM productos WHERE id_categoria = {$row['id']}";
-                                $productos_items = mysqli_query($conexion, $productos);
-                                while ($rowp = mysqli_fetch_assoc($productos_items)) {
-    
-                            ?>
+            <div class="productos">
 
-                            <div class="item-producto">
+                <?php
+                    $productos = "SELECT * FROM productos WHERE id_categoria = {$row['id']}";
+                    $productos_items = mysqli_query($conexion, $productos);
+                    while ($rowp = mysqli_fetch_assoc($productos_items)) {
 
-                                <div class="mitad center">
-                                    <div class="img-producto" style="background-image:url(backend/php/img_comprimida/productos/<?php echo $rowp ["id"]; ?>bg.jpg);"></div>
-                                </div>
+                ?>
 
-                                <div class="mitad">
-                                    <h5><?php echo $rowp ["nombre"]; ?></h5>
-                                    <p><?php echo $rowp ["descripcion"]; ?></p>
-                                    <button>$<?php echo $rowp ["precio"]; ?></button>
-                                </div>
+                <div class="item-producto">
 
-                            </div>
+                    <form action="backend/php/backend.php?type=productos&id=<?php echo $row["id"]; ?>&task=put" method="post" enctype="multipart/form-data" id="form_productos_put">
 
-                            <?php } ?>
+                        <div class="img-producto" style="background-image:url(backend/php/img_comprimida/productos/<?php echo $rowp ["id"]; ?>bg.jpg);">
+                        
+                            <label for="file_productos_<?php echo $row["id"]; ?>_put" class="emoji-upload"></label>
+                            <input type="file" name="img" id="file_productos_<?php echo $row["id"]; ?>_put">
 
                         </div>
-                        
-                    </div>
-                    
+
+                        <input type="text" name="namep" value="<?php echo $rowp ["nombre"]; ?>" id="namep_put">
+
+                        <textarea name="descp"  cols="" rows=""><?php echo $rowp ["descripcion"]; ?></textarea>
+
+                        <input type="number" name="pricep" class="price" value="<?php echo $rowp ["precio"]; ?>" id="">
+
+                        <div class="links">
+
+                         <a class="button borrar" href="backend/php/backend.php?type=productos&id=<?php echo $row["id"]; ?>&task=delete">Borrar</a>
+
+                         <button type="submit" class="button">Actualizar</button>
+
+                        </div>
+
+                    </form>
+
                 </div>
 
-            <?php } ?>
+                <?php } ?>
 
+            </div>
+            
         </div>
+        
+    </div>
+
+<?php } ?>
+
+</div>
+
+       </div>
 
         <!-- PRODUCTOS POST -->
 
@@ -248,7 +302,7 @@ if (isset($_SESSION['error_message'])) {
 
                     <h6>Nombre del Producto</h6>
 
-                    <input type="text" name="" id="" placeholder="Nombre" required>
+                    <input type="text" name="namep" id="" placeholder="Nombre" required>
 
                     <h6>Añadir una Descripción</h6>
 
@@ -261,7 +315,7 @@ if (isset($_SESSION['error_message'])) {
                     <h6>Añadir imagen</h6>
 
                     <label for="file_productos_post" class="emoji-upload"></label>
-                    <input type="file" name="img" id="file_productos_post">
+                    <input type="file" name="img" id="file_productos_post" required>
 
                     <button class="btnsubmit" type="submit">Cargar</button>
 
@@ -271,47 +325,14 @@ if (isset($_SESSION['error_message'])) {
 
 		</div>
 
-        <!-- PRODUCTOS DELETE -->
-
-        <?php
-
-         // Obtener los valores desde la URL
-         $idpurl = $_GET['id'];
-         $namepurl = $_GET['name'];
-
-        ?>
-
-        <div class='popup-container' id='deletep'>
-            <div class='popup'>
-                <a href='#' class='cerrar'>X</a>
-
-                <h4 class="delete">¿Desea eliminar la categoria <?php echo $namepurl ?>? (Recuerde que esta acción es irreversible)</h4>
-
-                <div class="links">
-
-                    <a class="a confirm" href="backend/php/backend.php?type=productos&id=<?php echo $idpurl ?>&task=delete">SI</a>
-                    <a  class="a deny" href="#">NO</a>
-
-                </div>
-
-            </div>
-        </div>
-
-
         <!-- RESPUESTAS -->
 
         <div class='popup-container' id='200'>
-            <div class='popup'>
-                <a href='#' class='cerrar'>X</a>
-                <h4>¡Consulta exitosa!</h4>
-                <label for='mostrar-detalles' class='ver-detalles'>Ver detalles</label>
-                <input type='checkbox' id='mostrar-detalles' class='oculto'>
-                <div class='detalles'>
-                    <h5>Detalles de la consulta</h5>
-                    <p>".$_SESSION['good_message']."</p>
+                <div class='popup'>
+                 <a href='#' class='cerrar'>X</a>
+                 <h4>¡Consulta exitosa!</h4>
                 </div>
             </div>
-        </div>
 
     </section>
 
