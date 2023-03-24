@@ -1,29 +1,27 @@
-<?php
+CREATE TABLE categorias (
+  id INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(50) NOT NULL,
+  fecha DATE NOT NULL,
+  PRIMARY KEY (id)
+);
 
-//DB SECOND
+CREATE TABLE productos (
+  id INT NOT NULL AUTO_INCREMENT,
+  id_categoria INT NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
+  descripcion TEXT,
+  precio INT NOT NULL,
+  fecha DATE NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_categoria) REFERENCES categorias(id) ON DELETE CASCADE
+);
 
-// Conexión a la base de datos (poner los valores correctos)
- $servername = "containers-us-west-45.railway.app";
- $username = "root";
- $password = "xlHxGLoU1ZSl5vzATMjZ";
- $dbname = "railway";
- $port = 7966;
- $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
+CREATE TABLE personal (
+  id INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(50) NOT NULL,
+  apodo VARCHAR(50),
+  descripcion TEXT,
+  fecha DATE,
+  PRIMARY KEY (id)
+);
 
-//VERIFICAR LA CONEXION
- if (!$conn) {
-   die("Error de conexión: " . mysqli_connect_error());
- }
- 
-
-//DB
-
-$conexion = mysqli_connect("containers-us-west-45.railway.app", "root", "xlHxGLoU1ZSl5vzATMjZ", "railway", 7966) or die("ERROR DE CONEXION");
-    
-?>
-
-                     <div class="links">
-
-
-
-                            </div>

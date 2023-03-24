@@ -1,23 +1,15 @@
 <?php
 
-//DB SECOND
+// Conexión a la base de datos "cafeteria"
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "cafeteria";
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// Conexión a la base de datos (poner los valores correctos)
- $servername = "containers-us-west-45.railway.app";
- $username = "root";
- $password = "xlHxGLoU1ZSl5vzATMjZ";
- $dbname = "railway";
- $port = 7966;
- $conn = mysqli_connect($servername, $username, $password, $dbname, $port);
-
-//VERIFICAR LA CONEXION
- if (!$conn) {
+// Verificar si la conexión fue exitosa
+if (!$conn) {
    die("Error de conexión: " . mysqli_connect_error());
- }
- 
+}
 
-//DB
-
-$conexion = mysqli_connect("containers-us-west-45.railway.app", "root", "xlHxGLoU1ZSl5vzATMjZ", "railway", 7966) or die("ERROR DE CONEXION");
-    
 ?>

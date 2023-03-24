@@ -40,7 +40,7 @@ if (isset($_SESSION['error_message'])) {
 
         <nav class="btnes">
 
-            <a class="btnhead" href="WebFlow/home.php"><h2 class="fix"></h2></a>
+            <a class="btnhead" href="WebFlow/index.php"><h2 class="fix"></h2></a>
 
         </nav>
 
@@ -107,7 +107,7 @@ if (isset($_SESSION['error_message'])) {
         <div class="categorias" id="categoriasbox">
 
             <?php 
-                $items = mysqli_query($conexion, $categorias);
+                $items = mysqli_query($conn, $categorias);
                 while ($row = mysqli_fetch_assoc ($items)) {
             ?>
 
@@ -210,10 +210,10 @@ if (isset($_SESSION['error_message'])) {
 
        <div id="productos">
 
-<?php 
- $items = mysqli_query($conexion, $categorias);
- while ($row = mysqli_fetch_assoc ($items)) {
- ?>
+        <?php 
+        $items = mysqli_query($conn, $categorias);
+        while ($row = mysqli_fetch_assoc ($items)) {
+        ?>
 
     <div class="cate_min" style=""><a href="#cate-<?php echo $row ["id"]; ?>" id="afull"><?php echo $row ["nombre"]; ?></a></div>
 
@@ -225,9 +225,8 @@ if (isset($_SESSION['error_message'])) {
 
                 <?php
                     $productos = "SELECT * FROM productos WHERE id_categoria = {$row['id']}";
-                    $productos_items = mysqli_query($conexion, $productos);
+                    $productos_items = mysqli_query($conn, $productos);
                     while ($rowp = mysqli_fetch_assoc($productos_items)) {
-
                 ?>
 
                 <div class="item-producto">
@@ -290,7 +289,7 @@ if (isset($_SESSION['error_message'])) {
                     <select name="id_catep" id="">
 
                     <?php 
-                        $items = mysqli_query($conexion, $categorias);
+                        $items = mysqli_query($conn, $categorias);
                         while ($row = mysqli_fetch_assoc ($items)) {
                     ?>
 
@@ -325,14 +324,93 @@ if (isset($_SESSION['error_message'])) {
 
 		</div>
 
+    <!-- PERSONAL -->
+
+        <div class="title">
+
+            <h2 id="products">Personal</h2>
+
+            <a class="crear" href="#postpr">Crear</a>
+
+        </div>
+
+        <div class="categorias fix2">
+
+            <?php 
+            $personal = "SELECT * FROM personal";
+            $items = mysqli_query($conn, $personal);
+            while ($rowpr = mysqli_fetch_assoc ($items)) {
+            ?>
+
+            <div class="slide">
+
+                <div class="boxpr"><a href="backend/php/backend.php?type=personal&id=<?php echo $rowpr["id"]; ?>&task=delete" class="deletepr">🗑️</a></div>
+
+                <div class="target">
+                <div class="staff-data img-staff" style="background-image:url(backend/php/img_comprimida/personal/<?php echo $rowpr ["id"]; ?>bg.jpg);"></div>
+                <div class="staff-data">
+                    <h3 class="staff-name"><?php echo $rowpr ["nombre"]; ?></h3>
+                    <h5 class="staff-nickname"><?php echo $rowpr ["apodo"]; ?></h5>
+                    <p class="staff-description"><?php echo $rowpr ["descripcion"]; ?></p>
+                </div>
+                </div>
+
+                <div class="boxpr"><a href="#put_personal_<?php echo $rowpr ["id"]; ?>" class="putpr">📝</a></div>
+
+            </div>  
+            
+            <div class='popup-container' id='put_personal_<?php echo $rowpr ["id"]; ?>'>
+                <div class='popup'>
+                    <a href='#' class='cerrar'>X</a>
+                    <form action="backend/php/backend.php?type=personal&id=<?php echo $rowpr["id"]; ?>&task=put" method="post" enctype="multipart/form-data" id="personal_put_<?php echo $rowpr ["id"]; ?>">
+                        <h4>Actualizar una tarjeta de personal</h4>
+                        <h6>Nombre del trabajador</h6>
+                        <input type="text" name="namepr" value="<?php echo $rowpr ["nombre"]; ?>" id="" placeholder="Nombre">
+                        <h6>Apodo del trabajador</h6>
+                        <input type="text" name="apodo" id="" value="<?php echo $rowpr ["apodo"]; ?>" placeholder="Apodo">
+                        <h6>Descripción de su trabajo</h6>
+                        <input type="text" name="descpr" id="" value="<?php echo $rowpr ["descripcion"]; ?>" placeholder="Descripción">
+                        <h6>Añadir imagen</h6>
+                        <label for="file_personal_put" class="emoji-upload"></label>
+                        <input type="file" name="img" id="file_personal_put">
+                        <button class="btnsubmit" type="submit">Actualizar</button>
+                    </form>
+                </div>
+            </div>
+
+            <?php } ?>
+
+        </div>
+
+    <!-- POST-PERSONAL --> 
+
+        <div class='popup-container' id='postpr'>
+            <div class='popup'>
+                <a href='#' class='cerrar'>X</a>
+                <form action="backend/php/backend.php?type=personal&task=post" method="post" enctype="multipart/form-data" id="personal_post">
+                    <h4>Crear una tarjeta de personal</h4>
+                    <h6>Nombre del trabajador</h6>
+                    <input type="text" name="namepr" id="" placeholder="Nombre">
+                    <h6>Apodo del trabajador</h6>
+                    <input type="text" name="apodo" id="" placeholder="Apodo">
+                    <h6>Descripción de su trabajo</h6>
+                    <input type="text" name="descpr" id="" placeholder="Descripción">
+                    <h6>Añadir imagen</h6>
+                    <label for="file_personal_post" class="emoji-upload"></label>
+                    <input type="file" name="img" id="file_personal_post" required>
+                    <button class="btnsubmit" type="submit">Cargar</button>
+                </form>
+            </div>
+        </div>
+
         <!-- RESPUESTAS -->
 
         <div class='popup-container' id='200'>
-                <div class='popup'>
-                 <a href='#' class='cerrar'>X</a>
-                 <h4>¡Consulta exitosa!</h4>
-                </div>
+            <div class='popup'>
+                <a href='#' class='cerrar'>X</a>
+                <h4>¡Consulta exitosa!</h4>
             </div>
+        </div>
 
     </section>
 
